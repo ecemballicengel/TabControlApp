@@ -20,8 +20,11 @@ namespace TabControlApp
             InitializeComponent();
             RefreshDataOgrenciler();
             RefreshDataDersler();
+            RefreshDataNotlar();
+            RefreshDataForComboBox();
+            RefreshDataDerslerForComboBox();
         }
-
+        #region Ogrenciler Sayfasi
         public void RefreshDataOgrenciler()
         {
 
@@ -50,7 +53,8 @@ namespace TabControlApp
                 cmd.ExecuteNonQuery();
                 con.Close();
                 RefreshDataOgrenciler();
-                MessageBox.Show("Kullanici Basarili Bir Sekilde Eklendi.");
+                RefreshDataForComboBox();
+                MessageBox.Show("Ogrenci Basarili Bir Sekilde Eklendi.");
             }
             catch (Exception ex)
             {
@@ -123,7 +127,8 @@ namespace TabControlApp
                 }
             }
         }
-
+        #endregion
+        #region Dersler Sayfasi
         public void RefreshDataDersler()
         {
             string query = "SELECT * FROM Dersler";
@@ -143,7 +148,7 @@ namespace TabControlApp
             SqlCommand cmd = new SqlCommand("INSERT INTO Dersler(DersAdi, DersKodu) VALUES(@DersAdi, @DersKodu)", con);
             cmd.Parameters.AddWithValue("@DersAdi", txtDersAdi.Text);
             cmd.Parameters.AddWithValue("@DersKodu", txtDersKodu.Text);
-            
+
 
             try
             {
@@ -151,6 +156,7 @@ namespace TabControlApp
                 cmd.ExecuteNonQuery();
                 con.Close();
                 RefreshDataDersler();
+                RefreshDataDerslerForComboBox();
                 MessageBox.Show("Ders Basarili Bir Sekilde Eklendi.");
             }
             catch (Exception ex)
@@ -205,7 +211,119 @@ namespace TabControlApp
                 }
             }
         }
+        #endregion
+        #region Notlar
+        public void RefreshDataNotlar()
+        {
+            string query = "SELECT * FROM Ogrenci_Ders_Notlari";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            dataGridViewNotlar.DataSource = dt;
+            for (int i = 0; i < dataGridViewNotlar.Columns.Count; i++)
+            {
+                dataGridViewNotlar.Columns[i].ReadOnly = true;
+            }
+        }
 
-      
+        public void RefreshDataForComboBox()
+        {
+            string query = "SELECT * FROM Ogrenciler";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            cmbOgrenci.DataSource = dt;
+            cmbOgrenci.DisplayMember = "Ad";
+            cmbOgrenci.ValueMember = "OgrenciID";
+        }
+
+        public void RefreshDataDerslerForComboBox()
+        {
+            string query = "SELECT * FROM Dersler";
+            SqlCommand cmd = new SqlCommand(query, con);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            cmbDers.DataSource = dt;
+            cmbDers.DisplayMember = "DersAdi";
+            cmbDers.ValueMember = "DersID";
+        }
+
+
+        private void btnKaydet3_Click(object sender, EventArgs e)
+        {
+            SqlCommand cmd = new SqlCommand("INSERT INTO Ogrenci_Ders_Notlari(Ogrenci, Ders, [Not]) VALUES(@Ogrenci, @Ders, @Not)", con);
+            cmd.Parameters.AddWithValue("@Ders", cmbDers.SelectedValue);
+            cmd.Parameters.AddWithValue("@Ogrenci", cmbOgrenci.SelectedValue);
+            cmd.Parameters.AddWithValue("@Not", int.Parse(txtNot.Text));
+
+
+            try
+            {
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                RefreshDataNotlar();
+                MessageBox.Show("Not Basarili Bir Sekilde Eklendi.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Bir Hata OLustu!", ex.Message);
+            }
+        }
+        private void btnGuncelle3_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewNotlar.CurrentRow != null)
+            {
+                SqlCommand cmd = new SqlCommand("UPDATE Ogrenci_Ders_Notlari SET Ogrenci=@Ogrenci,Ders=@Ders, [Not]=@Not WHERE OgrDersNotID=@OgrDersNotID", con);
+                cmd.Parameters.AddWithValue("@OgrDersNotID", Convert.ToInt32(dataGridViewNotlar.CurrentRow.Cells[0].Value));
+                cmd.Parameters.AddWithValue("@Ders", cmbDers.SelectedValue);
+                cmd.Parameters.AddWithValue("@Ogrenci", cmbOgrenci.SelectedValue);
+                cmd.Parameters.AddWithValue("@Not", int.Parse(txtNot.Text));
+
+
+                try
+                {
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                    RefreshDataNotlar();
+                    MessageBox.Show("Not Basarili Bir Sekilde Guncellendi.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Bir Hata OLustu!", ex.ToString());
+                }
+            }
+        }
+
+        private void btnSil3_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewNotlar.CurrentRow != null)
+            {
+                if (MessageBox.Show("Bu Notu silmek istediğinizden emin misiniz?", "Onay", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    SqlCommand cmd = new SqlCommand("DELETE FROM Ogrenci_Ders_Notlari WHERE OgrDersNotID=@OgrDersNotID", con);
+                    cmd.Parameters.AddWithValue("@OgrDersNotID", Convert.ToInt32(dataGridViewNotlar.CurrentRow.Cells[0].Value));
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        RefreshDataNotlar();
+                        MessageBox.Show("Not Başarılı Bir Şekilde Silindi");
+                    }
+                    catch (Exception ex)
+                    {
+
+                        MessageBox.Show("Bir Hata Oluştu", ex.ToString());
+                    }
+                }
+            }
+            
+        }
+        #endregion
     }
 }

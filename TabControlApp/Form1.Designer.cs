@@ -52,12 +52,13 @@
             this.txtDersAdi = new System.Windows.Forms.TextBox();
             this.dataGridViewDersler = new System.Windows.Forms.DataGridView();
             this.tabPageOgDersNot = new System.Windows.Forms.TabPage();
+            this.dataGridViewNotlar = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.btnSil3 = new System.Windows.Forms.Button();
             this.btnGuncelle3 = new System.Windows.Forms.Button();
             this.btnKaydet3 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtNot = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbDers = new System.Windows.Forms.ComboBox();
@@ -66,7 +67,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.dataGridViewNotlar = new System.Windows.Forms.DataGridView();
             this.tabControl.SuspendLayout();
             this.tabPageOgrenciler.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -75,8 +75,8 @@
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDersler)).BeginInit();
             this.tabPageOgDersNot.SuspendLayout();
-            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotlar)).BeginInit();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -85,7 +85,7 @@
             this.tabControl.Controls.Add(this.tabPageDersler);
             this.tabControl.Controls.Add(this.tabPageOgDersNot);
             this.tabControl.Font = new System.Drawing.Font("Arial", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.tabControl.Location = new System.Drawing.Point(23, 12);
+            this.tabControl.Location = new System.Drawing.Point(35, 18);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(6285, 2942);
@@ -329,13 +329,26 @@
             this.tabPageOgDersNot.TabIndex = 2;
             this.tabPageOgDersNot.Text = "OgrenciDersNotlari";
             // 
+            // dataGridViewNotlar
+            // 
+            this.dataGridViewNotlar.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewNotlar.BackgroundColor = System.Drawing.Color.Plum;
+            this.dataGridViewNotlar.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridViewNotlar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewNotlar.Location = new System.Drawing.Point(58, 35);
+            this.dataGridViewNotlar.Name = "dataGridViewNotlar";
+            this.dataGridViewNotlar.RowHeadersWidth = 62;
+            this.dataGridViewNotlar.RowTemplate.Height = 28;
+            this.dataGridViewNotlar.Size = new System.Drawing.Size(699, 685);
+            this.dataGridViewNotlar.TabIndex = 20;
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.label8);
             this.panel3.Controls.Add(this.btnSil3);
             this.panel3.Controls.Add(this.btnGuncelle3);
             this.panel3.Controls.Add(this.btnKaydet3);
-            this.panel3.Controls.Add(this.textBox1);
+            this.panel3.Controls.Add(this.txtNot);
             this.panel3.Controls.Add(this.label7);
             this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.cmbDers);
@@ -362,6 +375,7 @@
             this.btnSil3.TabIndex = 17;
             this.btnSil3.Text = "Sil";
             this.btnSil3.UseVisualStyleBackColor = true;
+            this.btnSil3.Click += new System.EventHandler(this.btnSil3_Click);
             // 
             // btnGuncelle3
             // 
@@ -371,6 +385,7 @@
             this.btnGuncelle3.TabIndex = 16;
             this.btnGuncelle3.Text = "Guncelle";
             this.btnGuncelle3.UseVisualStyleBackColor = true;
+            this.btnGuncelle3.Click += new System.EventHandler(this.btnGuncelle3_Click);
             // 
             // btnKaydet3
             // 
@@ -380,13 +395,14 @@
             this.btnKaydet3.TabIndex = 15;
             this.btnKaydet3.Text = "Kaydet";
             this.btnKaydet3.UseVisualStyleBackColor = true;
+            this.btnKaydet3.Click += new System.EventHandler(this.btnKaydet3_Click);
             // 
-            // textBox1
+            // txtNot
             // 
-            this.textBox1.Location = new System.Drawing.Point(51, 303);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(163, 30);
-            this.textBox1.TabIndex = 14;
+            this.txtNot.Location = new System.Drawing.Point(51, 303);
+            this.txtNot.Name = "txtNot";
+            this.txtNot.Size = new System.Drawing.Size(163, 30);
+            this.txtNot.TabIndex = 14;
             // 
             // label7
             // 
@@ -456,19 +472,6 @@
             this.comboBox2.Size = new System.Drawing.Size(236, 32);
             this.comboBox2.TabIndex = 1;
             // 
-            // dataGridViewNotlar
-            // 
-            this.dataGridViewNotlar.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewNotlar.BackgroundColor = System.Drawing.Color.Plum;
-            this.dataGridViewNotlar.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridViewNotlar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewNotlar.Location = new System.Drawing.Point(58, 35);
-            this.dataGridViewNotlar.Name = "dataGridViewNotlar";
-            this.dataGridViewNotlar.RowHeadersWidth = 62;
-            this.dataGridViewNotlar.RowTemplate.Height = 28;
-            this.dataGridViewNotlar.Size = new System.Drawing.Size(699, 685);
-            this.dataGridViewNotlar.TabIndex = 20;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -487,9 +490,9 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewDersler)).EndInit();
             this.tabPageOgDersNot.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotlar)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNotlar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -524,7 +527,7 @@
         private System.Windows.Forms.Button btnSil3;
         private System.Windows.Forms.Button btnGuncelle3;
         private System.Windows.Forms.Button btnKaydet3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtNot;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbDers;
